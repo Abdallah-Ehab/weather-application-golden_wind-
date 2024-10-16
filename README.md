@@ -18,13 +18,13 @@ A feature-rich weather application that provides real-time weather information a
 ## Screenshots
 
 ![Screenshot 1](assets/screenshot1.jpg)
-*Description of Screenshot 1*
+*screenshot of homescreen*
 
-![Screenshot 2](assets/screenshot1.jpg)
-*Description of Screenshot 2*
+![Screenshot 2](assets/screenshot3.jpg)
+*screenshot of the search screen*
 
-![Screenshot 3](assets/screenshot1.jpg)
-*Description of Screenshot 3*
+![Screenshot 3](assets/screenshot4.jpg)
+*screenshot of the searched city screen*
 
 ## Installation
 
