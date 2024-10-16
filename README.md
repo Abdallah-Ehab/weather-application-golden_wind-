@@ -17,14 +17,20 @@ A feature-rich weather application that provides real-time weather information a
 
 ## Screenshots
 
-![Screenshot 1](assets/screenshot1.jpg)
+![Screenshot 1](assets/screenshot1.png)
 *screenshot of homescreen*
 
-![Screenshot 2](assets/screenshot3.jpg)
+![Screenshot 2](assets/screenshot2.png)
 *screenshot of the search screen*
 
-![Screenshot 3](assets/screenshot4.jpg)
-*screenshot of the searched city screen*
+![Screenshot 3](assets/screenshot3.png)
+*screenshot of the saved cities screen*
+
+![Screenshot 4](assets/screenshot4.png)
+*screenshot of the settings screen*
+
+![Screenshot 5](assets/screenshot5.png)
+*screenshot of the weather forecast screen*
 
 ## Installation
 
