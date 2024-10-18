@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -7,65 +8,75 @@ import 'package:weather_app/core/utils/is_night.dart';
 import 'package:weather_app/presentation/bloc/forecast_weather_bloc/cubit/forecast_weather_cubit.dart';
 import 'package:weather_app/presentation/bloc/temperature_unit_bloc/cubit/temperature_unit_cubit.dart';
 import 'package:weather_app/presentation/widgets/background.dart';
+import 'package:weather_app/presentation/widgets/loading_widget.dart';
 
 class ForecastFullReportScreen extends StatelessWidget {
-  const ForecastFullReportScreen({super.key});
+  final String cityName;
+   const ForecastFullReportScreen({
+    super.key,
+    required this.cityName,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<ForecastWeatherCubit, ForecastWeatherState>(
-        builder: (context, state) {
-          if (state is ForecastWeatherLoading) {
-            return const Background(
-                screen: Center(
-                  child: CircularProgressIndicator(),
+      body: BlocProvider(
+        create: (context) => ForecastWeatherCubit()..getForecastWeatherByCity(cityName),
+        child: BlocBuilder<ForecastWeatherCubit, ForecastWeatherState>(
+          builder: (context, state) {
+            if (state is ForecastWeatherLoading) {
+              return const LoadingWidget();
+            } else if (state is ForecastWeatherFailed) {
+              return Background(
+                  screen: Center(
+                    child: Text(state.error),
+                  ),
+                  isNight: true);
+            } else if (state is ForecastWeatherSuccess) {
+              final forecastWeatherlist =
+                  state.forecastWeather.forecastCurrentWeather;
+              final isNight = isNightTime(
+                  state.forecastWeather.forecastCurrentWeather![0].dt,
+                  state.forecastWeather.city!.timezone);
+              return Background(
+                isNight: isNight,
+                screen: SizedBox(
+                  width: double.infinity,
+                  child: ListView.separated(
+                    itemCount: forecastWeatherlist!.length,
+                    itemBuilder: (context, index) {
+                      int timeStamp = forecastWeatherlist[index].dt;
+                      DateTime dateTime =
+                          DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+                      final hour = formattedDate.split(' ')[1];
+                      num temp = forecastWeatherlist[index].main!.temp!;
+                      String icon =
+                          forecastWeatherlist[index].weather![0].icon!;
+                      String desc =
+                          forecastWeatherlist[index].weather![0].description!;
+                      final cubit = context.read<TemperatureUnitCubit>();
+                      final temperature = cubit.convertTemperature(temp);
+                      final unitSymbol = cubit.getUnitSymbol();
+                      return forecastCurrentWeatherCard(
+                          icon, hour, temperature, unitSymbol, desc);
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 10,
+                      );
+                    },
+                  ),
                 ),
-                isNight: true);
-          } else if (state is ForecastWeatherFailed) {
-            return Background(
-                screen: Center(
-                  child: Text(state.error),
-                ),
-                isNight: true);
-          } else if (state is ForecastWeatherSuccess) {
-            final forecastWeatherlist =
-                state.forecastWeather.forecastCurrentWeather;
-            final isNight = isNightTime(state.forecastWeather.forecastCurrentWeather![0].dt,state.forecastWeather.city!.timezone);
-            return Background(
-              isNight: isNight ,
-              screen: SizedBox(
-                width: double.infinity,
-                child: ListView.separated(
-                  itemCount: forecastWeatherlist!.length,
-                  itemBuilder: (context, index) {
-                    int timeStamp = forecastWeatherlist[index].dt;
-                    DateTime dateTime =
-                        DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
-                    final hour = formattedDate.split(' ')[1];
-                    num temp = forecastWeatherlist[index].main!.temp!;
-                    String icon = forecastWeatherlist[index].weather![0].icon!;
-                    String desc =
-                        forecastWeatherlist[index].weather![0].description!;
-                    final cubit = context.read<TemperatureUnitCubit>();
-                    final temperature = cubit.convertTemperature(temp);
-                    final unitSymbol = cubit.getUnitSymbol();
-                    return forecastCurrentWeatherCard(icon, hour, temperature, unitSymbol, desc);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 10,
-                    );
-                  },
-                ),
-              ),
-            );
-          }else{
-            return const Center(child: Text("something is wrong I can feel it"),);
-          }
-        },
+              );
+            } else {
+              return const Center(
+                child: Text("something is wrong I can feel it",style: TextStyle(color: Colors.white),),
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -132,4 +143,3 @@ Widget forecastCurrentWeatherCard(
     ),
   );
 }
-

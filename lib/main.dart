@@ -29,7 +29,7 @@ Future<void> notificationTask() async {
           title: '${data.weather![0].main}',
           body:
               'Current weather in ${data.cityName}: ${data.weather![0].description}',
-          payload: "payload_data",
+          payload: data.weather![0].description!,
         );
       }
     }, (error) {

@@ -7,7 +7,7 @@ import 'package:weather_app/domain/workmanager/usecases/work_manager_usecase.dar
 import 'package:weather_app/presentation/bloc/permissions_bloc/cubit/permissions_cubit.dart';
 import 'package:weather_app/presentation/bloc/weather%20bloc/cubit/weather_cubit.dart';
 import 'package:weather_app/presentation/widgets/background.dart';
-import 'package:weather_app/presentation/widgets/home.dart';
+import 'package:weather_app/presentation/widgets/home_details.dart';
 import 'package:weather_app/presentation/widgets/loading_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
           if (state is PermissionsDenied || state is LocationServiceDisabled) {
             return const Center(
               child: Text(
-                  'Please, turn on location service for better user experience.'),
+                  'Please, turn on location service for better user experience.',style: TextStyle(color: Colors.white),maxLines: 2,overflow: TextOverflow.clip,),
             );
           } else if (state is LocationAndNotificationsGranted ||
               state is LocationWhenInUseGranted ||
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       onRefresh: ()async{
                         context.read<WeatherCubit>().getCurrentWeatherByPosition();
                       },
-                      child: Home(
+                      child: HomeDetails(
                         cityName: weatherState.currentWeather.cityName,
                         weatherCondition:
                             weatherState.currentWeather.weather![0].main,
@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                         pressure: weatherState.currentWeather.main!.pressure,
                         feelsLike: weatherState.currentWeather.main!.feelsLike,  
                         visibility: weatherState.currentWeather.visibility, 
-                        
+                        isNight: isNight,
                       ),
                     ),
                   );

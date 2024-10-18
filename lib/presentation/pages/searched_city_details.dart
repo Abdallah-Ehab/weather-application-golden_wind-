@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/local%20storage/local_storage.dart';
@@ -13,8 +11,8 @@ import 'package:weather_app/presentation/widgets/loading_widget.dart';
 
 class SearchedCityDetails extends StatelessWidget {
   final String cityName;
-  bool addcity;
-  SearchedCityDetails(
+  final bool addcity;
+  const SearchedCityDetails(
       {super.key, required this.cityName, required this.addcity});
 
   @override
@@ -53,6 +51,7 @@ class SearchedCityDetails extends StatelessWidget {
                         pressure: weatherState.currentWeather.main!.pressure,
                         feelsLike: weatherState.currentWeather.main!.feelsLike,
                         visibility: weatherState.currentWeather.visibility,
+                        isNight: isNight,
                       ),
                     ),
                     Align(

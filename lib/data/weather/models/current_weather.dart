@@ -1,6 +1,4 @@
 
-import 'dart:developer';
-
 import 'package:weather_app/data/weather/models/sys.dart';
 import 'package:weather_app/data/weather/models/weather.dart';
 import 'package:weather_app/data/weather/models/wind.dart';
