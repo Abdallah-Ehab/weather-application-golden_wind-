@@ -10,6 +10,8 @@ part 'forecast_weather_state.dart';
 
 class ForecastWeatherCubit extends Cubit<ForecastWeatherState> {
   ForecastWeatherCubit() : super(ForecastWeatherInitial());
+  
+  
   Future<void> _fetchWeather<T>(
     Future<Either<T, String>> Function() weatherFunction, {
     required Function(T) onSuccess,

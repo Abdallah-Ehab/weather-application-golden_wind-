@@ -65,6 +65,4 @@ removeCity(String cityName){
 
   getSavedCities();
 }
-
-
 }

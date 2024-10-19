@@ -12,7 +12,7 @@ class PermissionsCubit extends Cubit<PermissionsState> {
   final PermissionsRepoImplementation permissionsRepoImplementation;
   PermissionsCubit(this.permissionsRepoImplementation) : super(PermissionsInitial());
 
-   StreamSubscription<geolocatorServiceStatus.ServiceStatus>? _serviceStatusStream;
+  StreamSubscription<geolocatorServiceStatus.ServiceStatus>? _serviceStatusStream;
 
   Future<void> checkPermissions() async {
     // bool locationWhenInUseStatus = await CheckLocationWheninuseUsecase().call();

@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
-            label: "Home", // Added labels for accessibility
+            label: "Home",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined),
