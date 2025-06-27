@@ -62,12 +62,6 @@ void main() {
     callbackDispatcher,
   );
 
-  // Workmanager().registerPeriodicTask(
-  //   "1",
-  //   "periodicNotification",
-  //   frequency: const Duration(minutes: 15),
-  // );
-
   runApp(const MyApp());
 }
 
